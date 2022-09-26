@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 public class Utils {
@@ -64,6 +65,13 @@ public class Utils {
 	}
 	
 	public static boolean isNodeInArrayList(Node node, List<Node> l) {
+		for(Node n: l) {
+			if(isMatrixEqual(node.getM(), n.getM())) return true;
+		}
+		return false;
+	}
+	
+	public static boolean isNodeInQueue(Node node, Queue<Node> l) {
 		for(Node n: l) {
 			if(isMatrixEqual(node.getM(), n.getM())) return true;
 		}

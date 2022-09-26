@@ -1,23 +1,23 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Bfs {
+public class Heuristic {
 	public static boolean run() {
-	    int[][] goal = { { 1, 2, 3 }, { 4, 0, 6 }, { 7, 8, 9 } };
+	    int[][] goal = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
 	    System.out.println("Inicio");
-		// List<Node> visitedStates = new ArrayList<Node>();
-	    List<String> visitedStates = new ArrayList<String>();
-	    Queue<Node> nextStates = new LinkedList<Node>();
+		List<String> visitedStates = new ArrayList<String>();
+		List<Node> nextStates = new LinkedList<Node>();
 	    
 	    nextStates.add(Utils.generateInitialState());
 	    int i = 0;
 	    while(true) {
 	    	try {
-	    		Node nextState = nextStates.remove();
+	    		Node nextState = nextStates.remove(0);
 	    		System.out.println("Estado atual");
 	    		Utils.showM(nextState.getM());
 	    		i++;
@@ -32,18 +32,26 @@ public class Bfs {
 	    		//Utils.showM(nextState.getM());
 	    		// Utils.showM(nextState.getM());
 	    		if(Utils.isMatrixEqual(goal, nextState.getM())) {
-	    			//System.out.println("AA");
+	    			//System.out.println("AA");S
 	    			return true;
 	    		}
 	    			
 	    		visitedStates.add(nextState.key());
-				// System.out.println("Filhps");
+				// System.out.println("Filhos");
 
 	    		for (Node node : Utils.getChildNodes(nextState)) {
-					if(!visitedStates.contains(node.key()) && 
-							!Utils.isNodeInQueue(node, nextStates)) {
+					if(!visitedStates.contains(node.key())) {
+						for(Iterator<Node> iter = nextStates.iterator(); iter.hasNext();) {
+						    Node data = iter.next();
+						    if (Utils.isMatrixEqual(data.getM(), data.getM())) {
+						        iter.remove();
+						        break;
+						    }
+						}
+						
+						// adicionar novamente
 						// System.out.println("Nao ta");
-						nextStates.add(node);
+						
 					}
 					// System.out.println();
 					// Utils.showM(node.getM());

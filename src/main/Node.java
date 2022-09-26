@@ -5,6 +5,7 @@ public class Node {
 	private int row0;
 	private int col0;
 	private Node parent;
+	private int priority;
 	
 	public Node() {}
 	public Node(int m[][], int row0, int col0) {
@@ -20,6 +21,52 @@ public class Node {
 		this.parent = parent;
 	}
 	
+	public Node(int m[][], int row0, int col0, Node parent, int priority) {
+		this.m = m;
+		this.row0 = row0;
+		this.col0 = col0;
+		this.parent = parent;
+		this.priority = priority;
+	}
+	
+	public int calcValue(int[][] goal) {
+		int count = 0;
+		
+		for (int i = 0; i < goal.length; i++) {
+			for (int j = 0; j < goal.length; j++) {
+				int currentNumber = m[i][j];
+				for (int k = 0; k < goal.length; k++) {
+					for (int l = 0; l < goal.length; l++) {
+						if(goal[k][l] == currentNumber) {
+							if(i != k || j!=l) count++;
+							count += Math.abs(k - i);
+							count += Math.abs(l - j);
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		return count;
+	}
+	
+	public String key() {
+		String s = "";
+		for (int i = 0; i < m.length; i++) {
+			for (int j = 0; j < m.length; j++) {
+				s += Integer.toString(m[i][j]);
+			}
+		}
+		return s;
+	}
+	
+	public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 	public int[][] getM() {
 		return m;
 	}
