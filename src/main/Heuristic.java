@@ -12,14 +12,19 @@ public class Heuristic {
 	    System.out.println("Inicio");
 		List<String> visitedStates = new ArrayList<String>();
 		List<Node> nextStates = new LinkedList<Node>();
-	    
-	    nextStates.add(Utils.generateInitialState());
+		int[][] ini = { { 5, 2, 3 }, { 4, 0, 6 }, { 1, 7, 8 } };
+	    Node n = new Node(ini ,1, 1);
+	    nextStates.add(n);
+	    // nextStates.add(Utils.generateInitialState());
 	    int i = 0;
 	    while(true) {
 	    	try {
+	    		//for (Node ni : nextStates) {
+				//	Utils.showM(ni.getM());
+				//	System.out.println(ni.getPriority());
+				//}
 	    		Node nextState = nextStates.remove(0);
-	    		System.out.println("Estado atual");
-	    		Utils.showM(nextState.getM());
+	    		
 	    		i++;
 	    		// System.out.println("Visitados");
 	    		// for (Node node : visitedStates) {
@@ -39,16 +44,16 @@ public class Heuristic {
 	    		visitedStates.add(nextState.key());
 				// System.out.println("Filhos");
 
-	    		for (Node node : Utils.getChildNodes(nextState)) {
+	    		for (Node node : Utils.getChildNodesWithValue(goal, nextState)) {
 					if(!visitedStates.contains(node.key())) {
 						for(Iterator<Node> iter = nextStates.iterator(); iter.hasNext();) {
 						    Node data = iter.next();
-						    if (Utils.isMatrixEqual(data.getM(), data.getM())) {
+						    if (Utils.isMatrixEqual(node.getM(), data.getM())) {
 						        iter.remove();
 						        break;
 						    }
 						}
-						
+						nextStates.add(0, node);
 						// adicionar novamente
 						// System.out.println("Nao ta");
 						

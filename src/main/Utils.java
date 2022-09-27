@@ -2,11 +2,28 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
 public class Utils {
+	public boolean isSolvable (int[][] m) {
+		int linearPuzzle[] = new int[9];
+	    int k = 0;
+	    for(int i=0; i<3; i++)
+	        for(int j=0; j<3; j++)
+	            linearPuzzle[k++] = m[i][j];
+	    
+	    int inv_count = 0;
+	    for (int i = 0; i < 9; i++)
+	        for (int j = i + 1; j < 9; j++)
+	            if (linearPuzzle[i] > 0 &&
+	            		linearPuzzle[j] > 0 && linearPuzzle[i] > linearPuzzle[j])
+	                inv_count++;
+	    return inv_count % 2 ==0;
+	}
+	
 	public static int[][] copyArray(int[][] a) {
 		int[][] b = new int[3][3];
 		for (int i = 0; i < 3; i++) {
@@ -61,6 +78,52 @@ public class Utils {
 			Node newNode = new Node(newM, row0 + 1, col0, node);
 			children.add(newNode);
 		}
+		return children;
+	}
+	
+	public static List<Node> getChildNodesWithValue(int[][] goal, Node node) {
+		List<Node> children = new ArrayList<Node>();
+		int[][] m = node.getM();
+		int col0 = node.getCol0();
+		int row0 = node.getRow0();
+		// col0 col0 2
+		if(col0 < 2) { //Posso mover a esquerda
+			int[][] newM = copyArray(m);
+			newM[row0][col0] = newM[row0][col0 + 1];
+			newM[row0][col0 + 1] = 0;
+			Node newNode = new Node(newM, row0, col0 + 1, node);
+			newNode.calcValue(goal);
+			children.add(newNode);
+		}
+		
+		if(col0 > 0) { //Posso mover a direita
+			int[][] newM = copyArray(m);
+			newM[row0][col0] = newM[row0][col0 - 1];
+			newM[row0][col0 - 1] = 0;
+			Node newNode = new Node(newM, row0, col0 - 1, node);
+			newNode.calcValue(goal);
+
+			children.add(newNode);
+		}
+		
+		if(row0 > 0) { //Posso mover abaixo
+			int[][] newM = copyArray(m);
+			newM[row0][col0] = newM[row0 - 1][col0];
+			newM[row0 - 1][col0] = 0;
+			Node newNode = new Node(newM, row0 - 1, col0, node);
+			newNode.calcValue(goal);
+			children.add(newNode);
+		}
+		
+		if(row0 < 2) { //Posso mover acima
+			int[][] newM = copyArray(m);
+			newM[row0][col0] = newM[row0 + 1][col0];
+			newM[row0 + 1][col0] = 0;
+			Node newNode = new Node(newM, row0 + 1, col0, node);
+			newNode.calcValue(goal);
+			children.add(newNode);
+		}
+		Collections.sort(children);
 		return children;
 	}
 	

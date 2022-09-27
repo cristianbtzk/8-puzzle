@@ -2,7 +2,12 @@ package main;
 
 public class Main {
 	public static void main(String[] args) {
-		if(Bfs.run()) {
+//		if(Bfs.run()) {
+//			System.out.println("Sucesso");
+//		}else {
+//			System.out.println("Não achou");
+//		}
+		if(Heuristic.run()) {
 			System.out.println("Sucesso");
 		}else {
 			System.out.println("Não achou");

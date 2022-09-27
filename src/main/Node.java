@@ -1,6 +1,6 @@
 package main;
 
-public class Node {
+public class Node implements Comparable<Node>{
 	private int[][] m;
 	private int row0;
 	private int col0;
@@ -29,6 +29,13 @@ public class Node {
 		this.priority = priority;
 	}
 	
+	@Override public int compareTo(Node n) {
+		if (priority > n.getPriority()) return -1;
+		if (priority == n.getPriority()) return 0;
+		return 1;
+
+	}
+	
 	public int calcValue(int[][] goal) {
 		int count = 0;
 		
@@ -47,6 +54,8 @@ public class Node {
 				}
 			}
 		}
+		
+		setPriority(count);
 		
 		return count;
 	}
