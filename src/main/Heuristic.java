@@ -7,12 +7,21 @@ import java.util.List;
 import java.util.Queue;
 
 public class Heuristic {
-	public static boolean run() {
-	    int[][] goal = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
+	private int[][] goal = { { 1, 2, 3 }, { 4, 0, 5 }, { 6, 7, 8 } };
+
+	public int[][] getGoal() {
+		return goal;
+	}
+
+	public void setGoal(int[][] goal) {
+		this.goal = goal;
+	}
+
+	public Node run() {
 	    System.out.println("Inicio");
 		List<String> visitedStates = new ArrayList<String>();
 		List<Node> nextStates = new LinkedList<Node>();
-		int[][] ini = { { 5, 2, 3 }, { 4, 0, 6 }, { 1, 7, 8 } };
+		int[][] ini = { { 1, 2, 3 }, { 4, 0, 5 }, { 8, 6, 7 } };
 	    Node n = new Node(ini ,1, 1);
 	    nextStates.add(n);
 	    // nextStates.add(Utils.generateInitialState());
@@ -38,7 +47,7 @@ public class Heuristic {
 	    		// Utils.showM(nextState.getM());
 	    		if(Utils.isMatrixEqual(goal, nextState.getM())) {
 	    			//System.out.println("AA");S
-	    			return true;
+	    			return nextState;
 	    		}
 	    			
 	    		visitedStates.add(nextState.key());
@@ -65,7 +74,7 @@ public class Heuristic {
 			} catch (Exception e) {
 				System.out.println("Erro");
 				e.printStackTrace();
-				return false;
+				return null;
 			}
 	    	
 	    }

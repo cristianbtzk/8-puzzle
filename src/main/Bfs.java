@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Queue;
 
 public class Bfs {
-	public static boolean run() {
-	    int[][] goal = { { 1, 2, 3 }, { 4, 0, 6 }, { 7, 8, 9 } };
+	private int[][] goal = { { 1, 2, 3 }, { 4, 0, 6 }, { 7, 8, 9 } };
+	
+	
+	
+	public boolean run() {
 	    System.out.println("Inicio");
 		// List<Node> visitedStates = new ArrayList<Node>();
 	    List<String> visitedStates = new ArrayList<String>();
