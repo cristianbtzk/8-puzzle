@@ -47,6 +47,7 @@ public class Heuristic {
 	    		// Utils.showM(nextState.getM());
 	    		if(Utils.isMatrixEqual(goal, nextState.getM())) {
 	    			//System.out.println("AA");S
+	    			System.out.println("AAAAAAAA");
 	    			return nextState;
 	    		}
 	    			
