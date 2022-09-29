@@ -16,15 +16,6 @@ public class Utils {
 		return b;
 	}
 	
-	public static void showM(int[][] m) {
-		for (int i = 0; i < 3; i++) {
-		      for (int j = 0; j < 3; j++) {
-		        System.out.print(Integer.toString(m[i][j]) + ' ');
-		      }
-		      System.out.println();
-		    }
-	}
-	
 	public static List<Node> getChildNodes(Node node) {
 		List<Node> children = new ArrayList<Node>();
 		int[][] m = node.getM();
@@ -35,7 +26,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0][col0 + 1];
 			newM[row0][col0 + 1] = 0;
-			Node newNode = new Node(newM, row0, col0 + 1, node);
+			Node newNode = new Node(newM, row0, col0 + 1, node, "Esquerda");
 			children.add(newNode);
 		}
 		
@@ -43,7 +34,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0][col0 - 1];
 			newM[row0][col0 - 1] = 0;
-			Node newNode = new Node(newM, row0, col0 - 1, node);
+			Node newNode = new Node(newM, row0, col0 - 1, node, "Direita");
 			children.add(newNode);
 		}
 		
@@ -51,7 +42,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0 - 1][col0];
 			newM[row0 - 1][col0] = 0;
-			Node newNode = new Node(newM, row0 - 1, col0, node);
+			Node newNode = new Node(newM, row0 - 1, col0, node, "Baixo");
 			children.add(newNode);
 		}
 		
@@ -59,7 +50,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0 + 1][col0];
 			newM[row0 + 1][col0] = 0;
-			Node newNode = new Node(newM, row0 + 1, col0, node);
+			Node newNode = new Node(newM, row0 + 1, col0, node, "Cima");
 			children.add(newNode);
 		}
 		return children;
@@ -75,7 +66,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0][col0 + 1];
 			newM[row0][col0 + 1] = 0;
-			Node newNode = new Node(newM, row0, col0 + 1, node);
+			Node newNode = new Node(newM, row0, col0 + 1, node, "Esquerda");
 			newNode.calcValue(goal);
 			children.add(newNode);
 		}
@@ -84,7 +75,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0][col0 - 1];
 			newM[row0][col0 - 1] = 0;
-			Node newNode = new Node(newM, row0, col0 - 1, node);
+			Node newNode = new Node(newM, row0, col0 - 1, node, "Direita");
 			newNode.calcValue(goal);
 
 			children.add(newNode);
@@ -94,7 +85,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0 - 1][col0];
 			newM[row0 - 1][col0] = 0;
-			Node newNode = new Node(newM, row0 - 1, col0, node);
+			Node newNode = new Node(newM, row0 - 1, col0, node, "Baixo");
 			newNode.calcValue(goal);
 			children.add(newNode);
 		}
@@ -103,7 +94,7 @@ public class Utils {
 			int[][] newM = copyArray(m);
 			newM[row0][col0] = newM[row0 + 1][col0];
 			newM[row0 + 1][col0] = 0;
-			Node newNode = new Node(newM, row0 + 1, col0, node);
+			Node newNode = new Node(newM, row0 + 1, col0, node, "Cima");
 			newNode.calcValue(goal);
 			children.add(newNode);
 		}
@@ -165,5 +156,15 @@ public class Utils {
 	    Node n = new Node(start, row0, col0);
 	    
 	    return n;
+	}
+	
+
+	public static void showM(int[][] m) {
+		for (int i = 0; i < 3; i++) {
+		      for (int j = 0; j < 3; j++) {
+		        System.out.print(Integer.toString(m[i][j]) + ' ');
+		      }
+		      System.out.println();
+		    }
 	}
 }

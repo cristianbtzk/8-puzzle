@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
@@ -66,10 +67,14 @@ public class View extends JFrame {
 		
 		panel.setLayout(new GridLayout(3, 3));
 		
-		JPanel panelResolucao = new JPanel();
-
-		panelResolucao.setBounds(200, 49, 1000, 1000);
-		contentPane.add(panelResolucao);
+		
+		
+		JPanel panelResolucao = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelResolucao.setPreferredSize(new Dimension(1000, 10000));
+		JScrollPane scrollPane = new JScrollPane(panelResolucao);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(200, 180, 1000, 1000);
+		contentPane.add(scrollPane);
 		
 		JLabel lblTimeSpent = new JLabel("A");
 		lblTimeSpent.setBounds(23, 244, 160, 15);
@@ -99,7 +104,10 @@ public class View extends JFrame {
 		JLabel lblObjetivo = new JLabel("Objetivo");
 		lblObjetivo.setBounds(60, 24, 70, 25);
 		contentPane.add(lblObjetivo);
-
+		
+		JPanel panelSteps = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelSteps.setBounds(200, 50, 1000, 100);
+		contentPane.add(panelSteps);
 		
 		int count = 1;
 		for (int i = 0; i < 9; i++) {
@@ -118,6 +126,8 @@ public class View extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelResolucao.removeAll();
+				panelSteps.removeAll();
+
 				Bfs bfs = new Bfs();
 				if(bfs.isSolvable()) {
 					Node n = bfs.run();
@@ -139,6 +149,11 @@ public class View extends JFrame {
 						
 						while(!nodes.isEmpty()) {
 							nodea = nodes.pop();
+							
+							if(nodea.getMovement() != null) {
+								JLabel field = new JLabel(nodea.getMovement());
+								panelSteps.add(field);
+							}
 						
 							JPanel p = new JPanel();
 							p.setPreferredSize(new Dimension(100, 100));
@@ -176,6 +191,7 @@ public class View extends JFrame {
 		btnBuscaHeurstica_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelResolucao.removeAll();
+				panelSteps.removeAll();
 
 				Heuristic heuristica = new Heuristic();
 				if(heuristica.isSolvable()) {
@@ -198,6 +214,11 @@ public class View extends JFrame {
 						
 						while(!nodes.isEmpty()) {
 							nodea = nodes.pop();
+							
+							if(nodea.getMovement() != null) {
+								JLabel field = new JLabel(nodea.getMovement());
+								panelSteps.add(field);
+							}
 						
 							JPanel p = new JPanel();
 							p.setPreferredSize(new Dimension(100, 100));

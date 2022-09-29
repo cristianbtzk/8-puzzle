@@ -12,6 +12,53 @@ public class Bfs {
 	private long timeSpent;
 	private  int[][] ini = { { 1, 2, 3 }, { 4, 0, 5 }, { 8, 6, 7 } };
 
+	public boolean isSolvable () {
+		int linearPuzzle[] = new int[9];
+	    int k = 0;
+	    for(int i=0; i<3; i++)
+	        for(int j=0; j<3; j++)
+	            linearPuzzle[k++] = ini[i][j];
+	    
+	    int inv_count = 0;
+	    for (int i = 0; i < 9; i++)
+	        for (int j = i + 1; j < 9; j++)
+	            if (linearPuzzle[i] > 0 &&
+	            		linearPuzzle[j] > 0 && linearPuzzle[i] > linearPuzzle[j])
+	                inv_count++;
+	    return inv_count % 2 ==0;
+	}
+	
+	public Node run() {
+	    long tempo = System.currentTimeMillis();
+	    List<String> visitedStates = new ArrayList<String>(); // Os estados são transformados em String
+	    Queue<Node> nextStates = new LinkedList<Node>(); // Fila de estados a serem percorridos
+	    Node n = new Node(ini ,1, 1); // adiciona o estado inicial
+	    nextStates.add(n);
+	    // nextStates.add(Utils.generateInitialState());  // Método para gerar o estado inicial aleatoriamente		
+	    while(true) {
+	    	try {
+	    		Node nextState = nextStates.remove();
+	    		visitedStates.add(nextState.key());
+	    		
+	    		if(Utils.isMatrixEqual(goal, nextState.getM())) { // Verifica se o estado atual é igual ao objetivo
+	    			setVisitedNodesSize(visitedStates.size());
+	    			setTimeSpent(System.currentTimeMillis() - tempo);
+	    			return nextState;
+	    		}
+	    		for (Node node : Utils.getChildNodes(nextState)) {
+					if(!visitedStates.contains(node.key()) && 
+							!Utils.isNodeInQueue(node, nextStates)) {
+						nextStates.add(node);
+					}
+				}	
+			} catch (Exception e) {
+				System.out.println("Erro");
+				e.printStackTrace();
+				return null;
+			}
+	    }
+	}
+	
 	public long getTimeSpent() {
 		return timeSpent;
 	}
@@ -34,58 +81,5 @@ public class Bfs {
 
 	public void setGoal(int[][] goal) {
 		this.goal = goal;
-	}
-
-	public boolean isSolvable () {
-		int linearPuzzle[] = new int[9];
-	    int k = 0;
-	    for(int i=0; i<3; i++)
-	        for(int j=0; j<3; j++)
-	            linearPuzzle[k++] = ini[i][j];
-	    
-	    int inv_count = 0;
-	    for (int i = 0; i < 9; i++)
-	        for (int j = i + 1; j < 9; j++)
-	            if (linearPuzzle[i] > 0 &&
-	            		linearPuzzle[j] > 0 && linearPuzzle[i] > linearPuzzle[j])
-	                inv_count++;
-	    return inv_count % 2 ==0;
-	}
-	
-	public Node run() {
-	    long tempo = System.currentTimeMillis();
-
-	    List<String> visitedStates = new ArrayList<String>();
-	    Queue<Node> nextStates = new LinkedList<Node>();
-	    Node n = new Node(ini ,1, 1);
-	    nextStates.add(n);
-	    // nextStates.add(Utils.generateInitialState());
-	    while(true) {
-	    	try {
-	    		Node nextState = nextStates.remove();
-	    		visitedStates.add(nextState.key());
-	    		
-	    		if(Utils.isMatrixEqual(goal, nextState.getM())) {
-	    			setVisitedNodesSize(visitedStates.size());
-	    			setTimeSpent(System.currentTimeMillis() - tempo);
-	    			return nextState;
-	    		}
-	    			
-
-	    		for (Node node : Utils.getChildNodes(nextState)) {
-					if(!visitedStates.contains(node.key()) && 
-							!Utils.isNodeInQueue(node, nextStates)) {
-						nextStates.add(node);
-					}
-					
-				}
-	    		
-			} catch (Exception e) {
-				System.out.println("Erro");
-				e.printStackTrace();
-				return null;
-			}
-	    	
-	    }
 	}
 }

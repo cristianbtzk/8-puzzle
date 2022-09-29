@@ -6,27 +6,19 @@ public class Node implements Comparable<Node>{
 	private int col0;
 	private Node parent;
 	private int priority;
+	private String movement;
 	
 	public Node() {}
+	
 	public Node(int m[][], int row0, int col0) {
-		this.m = m;
-		this.row0 = row0;
-		this.col0 = col0;
+		this.m = m;	this.row0 = row0; this.col0 = col0;
 	}
 	
-	public Node(int m[][], int row0, int col0, Node parent) {
-		this.m = m;
-		this.row0 = row0;
-		this.col0 = col0;
-		this.parent = parent;
-	}
+	public Node(int m[][], int row0, int col0, Node parent, String movement) {
+		this.m = m; this.row0 = row0; this.col0 = col0; this.parent = parent; this.movement = movement;	}
 	
-	public Node(int m[][], int row0, int col0, Node parent, int priority) {
-		this.m = m;
-		this.row0 = row0;
-		this.col0 = col0;
-		this.parent = parent;
-		this.priority = priority;
+	public Node(int m[][], int row0, int col0, Node parent, int priority, String movement) {
+		this.m = m; this.row0 = row0; this.col0 = col0; this.parent = parent; this.priority = priority;	this.movement = movement;
 	}
 	
 	@Override public int compareTo(Node n) {
@@ -38,7 +30,6 @@ public class Node implements Comparable<Node>{
 	
 	public int calcValue(int[][] goal) {
 		int count = 0;
-		
 		for (int i = 0; i < goal.length; i++) {
 			for (int j = 0; j < goal.length; j++) {
 				int currentNumber = m[i][j];
@@ -54,9 +45,7 @@ public class Node implements Comparable<Node>{
 				}
 			}
 		}
-		
 		setPriority(count);
-		
 		return count;
 	}
 	
@@ -101,5 +90,13 @@ public class Node implements Comparable<Node>{
 		this.parent = parent;
 	}
 	
+
+	
+	public String getMovement() {
+		return movement;
+	}
+	public void setMovement(String movement) {
+		this.movement = movement;
+	}
 	
 }
