@@ -8,22 +8,6 @@ import java.util.Queue;
 import java.util.Random;
 
 public class Utils {
-	public boolean isSolvable (int[][] m) {
-		int linearPuzzle[] = new int[9];
-	    int k = 0;
-	    for(int i=0; i<3; i++)
-	        for(int j=0; j<3; j++)
-	            linearPuzzle[k++] = m[i][j];
-	    
-	    int inv_count = 0;
-	    for (int i = 0; i < 9; i++)
-	        for (int j = i + 1; j < 9; j++)
-	            if (linearPuzzle[i] > 0 &&
-	            		linearPuzzle[j] > 0 && linearPuzzle[i] > linearPuzzle[j])
-	                inv_count++;
-	    return inv_count % 2 ==0;
-	}
-	
 	public static int[][] copyArray(int[][] a) {
 		int[][] b = new int[3][3];
 		for (int i = 0; i < 3; i++) {
