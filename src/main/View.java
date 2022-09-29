@@ -95,13 +95,17 @@ public class View extends JFrame {
 		
 		btnNewButton.setBounds(17, 207, 171, 25);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblObjetivo = new JLabel("Objetivo");
+		lblObjetivo.setBounds(60, 24, 70, 25);
+		contentPane.add(lblObjetivo);
 
 		
 		int count = 1;
 		for (int i = 0; i < 9; i++) {
 			JLabel field;
 			if(i == 4) {
-				 field = new JLabel("0");
+				 field = new JLabel(" ");
 			}else {
 				field = new JLabel(String.valueOf(count));
 				count++;
@@ -113,10 +117,10 @@ public class View extends JFrame {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				panelResolucao.removeAll();
 				Bfs bfs = new Bfs();
 				if(bfs.isSolvable()) {
 					Node n = bfs.run();
-					System.out.println(n);
 					if(n != null) {
 						Stack<Node> nodes = new Stack<Node>();
 						nodes.add(n);
@@ -128,7 +132,7 @@ public class View extends JFrame {
 						Node nodea = null;
 						
 						lblTimeSpent.setVisible(true);
-						lblTimeSpent.setText(String.valueOf(bfs.getTimeSpent()) + "ms");
+						lblTimeSpent.setText("Tempo: " + String.valueOf(bfs.getTimeSpent()) + "ms");
 						
 						lblVisitedStates.setVisible(true);
 						lblVisitedStates.setText("Estados visitados: " + String.valueOf(bfs.getVisitedNodesSize()));
@@ -136,8 +140,6 @@ public class View extends JFrame {
 						while(!nodes.isEmpty()) {
 							nodea = nodes.pop();
 						
-							Utils.showM(nodea.getM());
-							System.out.println();
 							JPanel p = new JPanel();
 							p.setPreferredSize(new Dimension(100, 100));
 	
@@ -149,35 +151,35 @@ public class View extends JFrame {
 	
 							for (int i = 0; i < 3; i++) {
 								for (int j = 0; j < 3; j++) {
-									field = new JLabel(String.valueOf(m[i][j]));
+									if(m[i][j] == 0)
+										field = new JLabel(" ");
+									else
+										field = new JLabel(String.valueOf(m[i][j]));
 									field.setHorizontalAlignment(JTextField.CENTER);
 									field.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 									p.add(field);
 								}	
 							}							
-						}
+						}	
 						
-						getContentPane().revalidate();
-	
-						getContentPane().repaint();
-						JOptionPane.showMessageDialog(null, "A achou");
-					}else {
-						System.out.println("ASnnnn");
-	
+					}else {	
 						JOptionPane.showMessageDialog(null, "Não achou");
 					}
 				} else {
 					lblmpossvelResolver.setVisible(true);
 				}
+				getContentPane().revalidate();
+				getContentPane().repaint();
 			}
 		});
 		
 		btnBuscaHeurstica_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				panelResolucao.removeAll();
+
 				Heuristic heuristica = new Heuristic();
 				if(heuristica.isSolvable()) {
 					Node n = heuristica.run();
-					System.out.println(n);
 					if(n != null) {
 						Stack<Node> nodes = new Stack<Node>();
 						nodes.add(n);
@@ -189,7 +191,7 @@ public class View extends JFrame {
 						Node nodea = null;
 						
 						lblTimeSpent.setVisible(true);
-						lblTimeSpent.setText(String.valueOf(heuristica.getTimeSpent()) + "ms");
+						lblTimeSpent.setText("Tempo: " + String.valueOf(heuristica.getTimeSpent()) + "ms");
 						
 						lblVisitedStates.setVisible(true);
 						lblVisitedStates.setText("Estados visitados: " + String.valueOf(heuristica.getVisitedNodesSize()));
@@ -197,8 +199,6 @@ public class View extends JFrame {
 						while(!nodes.isEmpty()) {
 							nodea = nodes.pop();
 						
-							Utils.showM(nodea.getM());
-							System.out.println();
 							JPanel p = new JPanel();
 							p.setPreferredSize(new Dimension(100, 100));
 	
@@ -210,28 +210,27 @@ public class View extends JFrame {
 	
 							for (int i = 0; i < 3; i++) {
 								for (int j = 0; j < 3; j++) {
-									field = new JLabel(String.valueOf(m[i][j]));
+									if(m[i][j] == 0)
+										field = new JLabel(" ");
+									else
+										field = new JLabel(String.valueOf(m[i][j]));
 									field.setHorizontalAlignment(JTextField.CENTER);
 									field.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 									p.add(field);
 								}	
 							}
-							System.out.println("a");
 							
 						}
-						
-						getContentPane().revalidate();
-	
-						getContentPane().repaint();
-						JOptionPane.showMessageDialog(null, "A achou");
 					}else {
-						System.out.println("ASnnnn");
 	
 						JOptionPane.showMessageDialog(null, "Não achou");
 					}
 				} else {
 					lblmpossvelResolver.setVisible(true);
 				}
+				getContentPane().revalidate();
+				
+				getContentPane().repaint();
 			}
 		});
 		
